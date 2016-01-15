@@ -26,15 +26,10 @@ limitations under the License.
     <name>Apache TinkerPop :: Gremlin OSGI dependencies</name>
     <packaging>bundle</packaging>
     <properties>
-        <osgi.embed>*</osgi.embed>
+        <osgi.embed>*;groupId=!org.slf4j</osgi.embed>
         <osgi.export.embed>*</osgi.export.embed>
     </properties>
     <dependencies>
-        <dependency>
-            <groupId>org.apache.tinkerpop</groupId>
-            <artifactId>gremlin-shaded</artifactId>
-            <version>${project.version}</version>
-        </dependency>
         <dependency>
             <groupId>org.javatuples</groupId>
             <artifactId>javatuples</artifactId>
