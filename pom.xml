@@ -22,33 +22,88 @@ limitations under the License.
         <artifactId>tinkerpop</artifactId>
         <version>3.1.1-SNAPSHOT</version>
     </parent>
+    <groupId>com.github.gdelafosse</groupId>
     <artifactId>gremlin-osgi-deps</artifactId>
     <name>Apache TinkerPop :: Gremlin OSGI dependencies</name>
     <packaging>bundle</packaging>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
     <properties>
         <osgi.embed>*;groupId=!org.slf4j</osgi.embed>
         <osgi.export.embed>*</osgi.export.embed>
     </properties>
     <dependencies>
+
+        <!-- waiting for https://github.com/javatuples/javatuples/pull/4 -->
         <dependency>
             <groupId>org.javatuples</groupId>
             <artifactId>javatuples</artifactId>
             <version>${java.tuples.version}</version>
         </dependency>
+
+        <!-- waiting release > 0.7.1 -->
         <dependency>
             <groupId>com.carrotsearch</groupId>
             <artifactId>hppc</artifactId>
             <version>${hppc.version}</version>
         </dependency>
+
+        <!-- waiting https://github.com/jcabi/jcabi-manifests/pull/29 -->
         <dependency>
             <groupId>com.jcabi</groupId>
             <artifactId>jcabi-manifests</artifactId>
             <version>${jcabi-manifests.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.mindrot</groupId>
-            <artifactId>jbcrypt</artifactId>
-            <version>${jbcrypt.version}</version>
-        </dependency>
+
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.3</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>signing</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
 </project>
