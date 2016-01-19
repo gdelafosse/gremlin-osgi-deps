@@ -24,6 +24,7 @@ limitations under the License.
     </parent>
     <groupId>com.github.gdelafosse</groupId>
     <artifactId>gremlin-osgi-deps</artifactId>
+    <version>3.1.1-1</version>
     <name>Apache TinkerPop :: Gremlin OSGI dependencies</name>
     <packaging>bundle</packaging>
 
